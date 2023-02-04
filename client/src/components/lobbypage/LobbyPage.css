@@ -1,0 +1,40 @@
+.lobby-container {
+  border: none;
+  border-radius: 5px;
+  background-color: #f9f5eb;
+  width: 850px;
+  height: 70vh;
+  display: flex;
+  /* flex-wrap: wrap; */
+  justify-content: center;
+  margin: auto;
+  overflow-y: scroll;
+}
+
+.lobby-title {
+  text-align: center;
+  font-size: 30px;
+  color: rgb(107, 5, 12);
+  padding: 30px;
+  font-weight: 700;
+
+  /* display: flex;
+    flex-wrap: wrap;
+    justify-content: center; */
+}
+
+.choose-code {
+  width: 200px;
+  height: 50px;
+  padding: 10px;
+  text-align: center;
+  margin: 10px;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #607eaa;
+  color: #f9f5eb;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+}
