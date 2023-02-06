@@ -3,7 +3,7 @@ mongoose.set("strictQuery", false);
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 const http = require("http").Server(app);
 const cors = require("cors");
 const CodeBlock = require("./codeBlockSchema");
