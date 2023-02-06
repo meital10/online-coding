@@ -8,11 +8,6 @@ const codeBlockSchema = new Schema({
   code: {
     type: String,
   },
-  // role: {
-  //   type: String,
-  //   default: "student",
-  //   enum: ["student", "mentor"],
-  // },
 });
 
 const CodeBlock = mongoose.model("CodeBlock", codeBlockSchema);

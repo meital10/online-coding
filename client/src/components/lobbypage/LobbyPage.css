@@ -1,11 +1,10 @@
 .lobby-container {
   border: none;
   border-radius: 5px;
-  background-color: #f9f5eb;
-  width: 850px;
+  background-color: #ebebf9;
+  width: 50%;
   height: 70vh;
   display: flex;
-  /* flex-wrap: wrap; */
   justify-content: center;
   margin: auto;
   overflow-y: scroll;
@@ -17,10 +16,6 @@
   color: rgb(107, 5, 12);
   padding: 30px;
   font-weight: 700;
-
-  /* display: flex;
-    flex-wrap: wrap;
-    justify-content: center; */
 }
 
 .choose-code {
@@ -32,7 +27,7 @@
   display: inline-block;
   font-size: 16px;
   cursor: pointer;
-  background-color: #607eaa;
+  background-color: #4a6998;
   color: #f9f5eb;
   outline: none;
   border: none;

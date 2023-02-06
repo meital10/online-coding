@@ -2,12 +2,19 @@
   width: 100%;
   height: 10vh;
   display: flex;
+  align-items: center;
   justify-content: center;
   padding: 20px;
   font-size: 30px;
   color: rgb(107, 5, 12);
   padding: 30px;
   font-weight: 700;
+}
+
+.welcome-user {
+  color: #4a6998;
+  margin-left: 20px;
+  margin-top: 10px;
 }
 
 /* .message__container {
@@ -27,22 +34,22 @@
 }
 
 .code-erea {
-  width: 850px;
+  width: 50%;
   height: 70vh;
   padding: 15px;
-  background-color: #f8fafc;
+  background-color: #ebebf9;
   border: none;
-  background-color: #f9f5eb;
   border-radius: 5px;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
-/* .leaveChat__btn {
-    padding: 10px;
-    width: 150px;
-    border: none;
-    outline: none;
-    background-color: #d1512d;
-    cursor: pointer;
-    color: #eae3d2;
-  } */
+.btn {
+  padding: 10px;
+  margin-top: 10px;
+  width: 150px;
+  border: none;
+  outline: none;
+  background-color: #4a6998;
+  cursor: pointer;
+  color: #f4f2ee;
+}

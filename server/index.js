@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
+mongoose.set("strictQuery", false);
 const express = require("express");
 const app = express();
+const dotenv = require("dotenv");
 const PORT = 4000;
-const CodeBlock = require("./codeBlockSchema");
-
 const http = require("http").Server(app);
 const cors = require("cors");
-// const { title } = require("process");
+const CodeBlock = require("./codeBlockSchema");
 
 app.use(cors());
 
@@ -16,85 +16,63 @@ const socketIO = require("socket.io")(http, {
   },
 });
 
-let users = [];
+dotenv.config();
 
 // connet to mongodb
-const MongoClient = require("mongodb").MongoClient;
-const mongoDB = "mongodb+srv://meital:1961@cluster0.ggtxa.mongodb.net/meitaldb";
 mongoose
-  .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("db is connected");
   });
-const client = new MongoClient(mongoDB, { useNewUrlParser: true });
-// client.connect((err) => {
-//   const collection = client.db("meitaldb").collection("codeBlocks");
-//   // Find all documents in the devices collection
-//   collection.find({}).toArray(function (err, result) {
-//     if (err) throw err;
-//     // Send the result to the socket
-//     socket.emit("data", result);
-//   });
-//   client.close();
-// });
-
-// findById({})
-// updateOne
 
 let mentorSocketId = null;
 
+// get blockcode names from DB and pass it to the client through socket
 socketIO.on("connection", (socket) => {
   console.log(` ${socket.id} user just connected!`);
   CodeBlock.find().then((result) => {
     socket.emit("output-codes-names", result);
   });
 
-  // find code by id
-
+  // get blockcode by id from DB and pass it to the client through socket
   socket.on("get-chosen-code", (id) => {
-    CodeBlock.findById(id).then((result) => {
-      console.log("code by id:", result);
-      const data = { result, userType: "student" };
+    CodeBlock.findById({ _id: mongoose.Types.ObjectId(id) }).then((result) => {
+      // The student is default and second option. if there is id in the socket we can know is already there
+      const data = { result };
       if (!mentorSocketId) {
         mentorSocketId = socket.id;
         data.userType = "mentor";
+      } else {
+        data.userType = mentorSocketId === socket.id ? "mentor" : "student";
       }
       socket.emit("response-chosen-code", data);
-      console.log("data user type is:");
+      // console.log("data user type is:", data);
     });
   });
-  socket.on("code", (data) => {
-    const cblock = new CodeBlock({ title: data.title, code: data.code });
-    console.log("cblock:", cblock);
-    // cblock.save().then(() => {
-    socketIO.emit("codeResponse", data);
-  });
-  // socket.on('editCodeBlock', (data) => {
-  //   socket.broadcast.emit('editCodeBlock-response', data);
-  // })
 
-  //Listens when a new user joins the server
-  socket.on("newUser", (data) => {
-    //Adds the new user to the list of users
-    users.push(data);
-    // console.log(users);
-    //Sends the list of users to the client
-    // socketIO.emit("newUserResponse", users);
+  socket.on("editCodeBlock", (data) => {
+    // console.log("DATA IS:", data);
+    socket.broadcast.emit("editCodeBlock-response", data);
   });
 
   socket.on("disconnect", () => {
     console.log(" A user disconnected");
-    //Updates the list of users when a user disconnects from the server
-    users = users.filter((user) => user.socketID !== socket.id);
-    console.log(users);
-    //Sends the list of users to the client
-    socketIO.emit("newUserResponse", users);
+    if (mentorSocketId === socket.id) {
+      mentorSocketId = null;
+    }
     socket.disconnect();
   });
 });
 
 socketIO.on("errorConnection", (err) => {
   console.log(`Error Conection: ${err.message}`);
+});
+
+process.on("uncaughtException", (err, origin) => {
+  console.log(err);
 });
 
 http.listen(PORT, () => {

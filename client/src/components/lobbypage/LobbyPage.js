@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import { diffIndexes } from "../../../../server/codeBlockSchema";
 import "./LobbyPage.css";
 
 const LobbyPage = ({ socket }) => {
   const navigate = useNavigate();
-  const [userName, setUserName] = useState("");
   const [codes, setCodes] = useState([]);
 
   useEffect(() => {
@@ -14,20 +12,8 @@ const LobbyPage = ({ socket }) => {
       setCodes([...data]);
     });
   }, [socket, codes]);
-  // add new user
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   localStorage.setItem("userName", userName);
-  //   //sends the username and socket ID to the Node.js server
-  //   socket.emit("newUser", { userName, socketID: socket.id });
-  //   navigate("/chat");
-  // };
 
   const chosenCodeClicked = (codeId) => {
-    // localStorage.setItem("userName", userName);
-    //sends the username and socket ID to the Node.js server
-
-    // navigate("/code");
     navigate(`/${codeId}`);
   };
   return (
