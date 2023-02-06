@@ -30,17 +30,17 @@ mongoose
 
 let mentorSocketId = null;
 
-// get blockcode names from DB and pass it to the client through socket
+// get all blockcodes names from DB and pass it to the client through socket- to lobby page
 socketIO.on("connection", (socket) => {
   console.log(` ${socket.id} user just connected!`);
   CodeBlock.find().then((result) => {
     socket.emit("output-codes-names", result);
   });
 
-  // get blockcode by id from DB and pass it to the client through socket
+  // get one blockcode from DB and pass it to the client through socket - to codeblock page
   socket.on("get-chosen-code", (id) => {
     CodeBlock.findById({ _id: mongoose.Types.ObjectId(id) }).then((result) => {
-      // The student is default and second option. if there is id in the socket we can know is already there
+      // check if the mentor is the first every refresh
       const data = { result };
       if (!mentorSocketId) {
         mentorSocketId = socket.id;
@@ -49,12 +49,10 @@ socketIO.on("connection", (socket) => {
         data.userType = mentorSocketId === socket.id ? "mentor" : "student";
       }
       socket.emit("response-chosen-code", data);
-      // console.log("data user type is:", data);
     });
   });
 
   socket.on("editCodeBlock", (data) => {
-    // console.log("DATA IS:", data);
     socket.broadcast.emit("editCodeBlock-response", data);
   });
 
