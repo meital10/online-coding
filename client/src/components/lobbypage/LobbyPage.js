@@ -25,7 +25,7 @@ const LobbyPage = ({ socket }) => {
         {codes &&
           codes.map((code) => (
             <div
-              className="choose-code"
+              className="code-name"
               key={code._id}
               onClick={() => chosenCodeClicked(code._id)}
             >

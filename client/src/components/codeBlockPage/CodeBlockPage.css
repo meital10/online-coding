@@ -17,14 +17,6 @@
   margin-top: 10px;
 }
 
-/* .message__container {
-  width: 100%;
-  height: 80vh;
-
-  padding: 20px;
-  overflow-y: scroll;
-} */
-
 .code-container > * {
   margin-bottom: 10px;
   display: flex;
