@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-// to highlight the blaock code syntax. need to be fixed before use
+// to highlight the block code syntax. need to be fixed before use
 // import hljs from "highlight.js";
 // import "highlight.js/styles/default.css";
 

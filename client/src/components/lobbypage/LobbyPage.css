@@ -17,9 +17,10 @@
 }
 
 .code-name {
-  width: 25%;
+  width: 20%;
   height: 50px;
   text-align: center;
+  align-items: center;
   margin: 10px;
   display: inline-block;
   padding: 10px;
@@ -32,6 +33,15 @@
   border-radius: 5px;
 }
 
+@media (min-width: 1500px) {
+  .lobby-container {
+    width: 50%;
+  }
+  .code-name {
+    width: 25%;
+    height: 50px;
+  }
+}
 @media (max-width: 1590px) {
   .lobby-container {
     width: 50%;
